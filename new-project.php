@@ -11,7 +11,7 @@ $long_opts  = array(
 );
 
 #Presets
-$standard_files = "/Users/dan.flies/code/wordpress-default";
+$standard_files = "/Users/dan.flies/code/presentation/wordpress-default";
 $plugins_to_activate = ['contact-form-7', 'robo-gallery', 'advanced-custom-fields'];
 $theme_to_activate = "startup-blog";
 $option_settings = [
@@ -34,25 +34,25 @@ if (!file_exists($project_name)) {
     mkdir($project_name, 0777, true);
 }
 
+chdir($project_name);
+
 $url = "{$project_name}.localhost";
 if(!file_exists("/Applications/AMPPS/www/$url")){
     symlink("{$script_working_dir}/{$project_name}/","/Applications/AMPPS/www/$url" );
 }
 
-//file_put_contents("./{$project_name}/wordpress.tar.gz", "https://wordpress.org/latest.tar.gz");
-
-chdir($project_name);
 if(!file_exists('wp-config.php')) {
     log_message("wp-config created.");
-    exec("wp config create --dbname='{$project_name}_wp_db' --dbuser=root --dbpass=mysql --dbhost=127.0.0.1");
+    exec("wp config create --dbname='{$project_name}_wp_db' --dbuser=db_user --dbpass=db_pass --dbhost=127.0.0.1");
 } else {
     log_message("wp-config already exisits.");
 }
 
+
 $is_installed = exec("wp core is-installed");
 if(!$is_installed){
     log_message("Installing WordPress");
-    exec("wp core install --url={$url} --title={$project_name} --admin_user='dfadmin' --admin_password='default_pass' --admin_email=dan@danflies.com");
+    exec("wp core install --url={$url} --title={$project_name} --admin_user='admin' --admin_password='default_pass' --admin_email=boss@nj.com");
 } else {
     log_message("WP is already installed.");
 }
